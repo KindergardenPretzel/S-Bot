@@ -210,7 +210,10 @@ void opcontrol() {
       intake(100);
     } 
     if (master.get_digital_new_press(DIGITAL_R2)) {
-      intake(-100);
+      intake(-70);
+    } 
+    if (master.get_digital_new_press(DIGITAL_L2)) {
+      score_low(100);
     } 
 
     pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
