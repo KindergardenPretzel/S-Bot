@@ -212,8 +212,23 @@ void opcontrol() {
     if (master.get_digital_new_press(DIGITAL_R2)) {
       intake(-70);
     } 
-    if (master.get_digital_new_press(DIGITAL_L2)) {
+
+    if (master.get_digital(DIGITAL_L2)) {
       score_low(100);
+    } 
+    else if (master.get_digital(DIGITAL_L1)) {
+      score_high(100);
+    } 
+    else {
+      score_stop();
+    }
+
+    if (master.get_digital_new_press(DIGITAL_UP)) {
+      descorer_on();
+    } 
+
+    if (master.get_digital_new_press(DIGITAL_Y)) {
+     loader();
     } 
 
     pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
