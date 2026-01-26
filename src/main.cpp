@@ -5,13 +5,12 @@ ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
     {-15, 16, -17},     // B M F Left Chassis Ports (negative port will reverse it!)
     {18, -19, 20},  // B M F Right Chassis Ports (negative port will reverse it!)
-
     12,      // IMU Port
     3.25,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
     450);   // Wheel RPM = cartridge * (motor gear / wheel gear)
 
-// ez::tracking_wheel horiz_tracker(8, 2.75, 4.0);  // This tracking wheel is perpendicular to the drive wheels
-// ez::tracking_wheel vert_tracker(9, 2.75, 4.0);   // This tracking wheel is parallel to the drive wheels
+ ez::tracking_wheel horiz_tracker(-13, 2, 4.2);  // This tracking wheel is perpendicular to the drive wheels
+ ez::tracking_wheel vert_tracker(14, 2, 0.0);   // This tracking wheel is parallel to the drive wheels
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -22,8 +21,8 @@ ez::Drive chassis(
 void initialize() {
   // Print our branding over your terminal :D
   pros::delay(500);  // Stop the user from doing anything while legacy ports configure
-  // chassis.odom_tracker_back_set(&horiz_tracker);
-  // chassis.odom_tracker_left_set(&vert_tracker);
+  chassis.odom_tracker_back_set(&horiz_tracker);
+  chassis.odom_tracker_right_set(&vert_tracker);
 
   // Configure your chassis controls
   chassis.opcontrol_curve_buttons_toggle(false);   // Enables modifying the controller curve with buttons on the joysticks
@@ -39,20 +38,20 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
-      {"Drive\n\nDrive forward and come back", drive_example},
-      {"Turn\n\nTurn 3 times.", turn_example},
-      {"Drive and Turn\n\nDrive forward, turn, come back", drive_and_turn},
-      {"Drive and Turn\n\nSlow down during drive", wait_until_change_speed},
-      {"Swing Turn\n\nSwing in an 'S' curve", swing_example},
-      {"Motion Chaining\n\nDrive forward, turn, and come back, but blend everything together :D", motion_chaining},
-      {"Combine all 3 movements", combining_movements},
-      {"Interference\n\nAfter driving forward, robot performs differently if interfered or not", interfered_example},
-      {"Simple Odom\n\nThis is the same as the drive example, but it uses odom instead!", odom_drive_example},
+     // {"Drive\n\nDrive forward and come back", drive_example},
+     // {"Turn\n\nTurn 3 times.", turn_example},
+     // {"Drive and Turn\n\nDrive forward, turn, come back", drive_and_turn},
+     // {"Drive and Turn\n\nSlow down during drive", wait_until_change_speed},
+     // {"Swing Turn\n\nSwing in an 'S' curve", swing_example},
+     // {"Motion Chaining\n\nDrive forward, turn, and come back, but blend everything together :D", motion_chaining},
+     // {"Combine all 3 movements", combining_movements},
+     // {"Interference\n\nAfter driving forward, robot performs differently if interfered or not", interfered_example},
+     // {"Simple Odom\n\nThis is the same as the drive example, but it uses odom instead!", odom_drive_example},
       {"Pure Pursuit\n\nGo to (0, 30) and pass through (6, 10) on the way.  Come back to (0, 0)", odom_pure_pursuit_example},
-      {"Pure Pursuit Wait Until\n\nGo to (24, 24) but start running an intake once the robot passes (12, 24)", odom_pure_pursuit_wait_until_example},
-      {"Boomerang\n\nGo to (0, 24, 45) then come back to (0, 0, 0)", odom_boomerang_example},
-      {"Boomerang Pure Pursuit\n\nGo to (0, 24, 45) on the way to (24, 24) then come back to (0, 0, 0)", odom_boomerang_injected_pure_pursuit_example},
-      {"Measure Offsets\n\nThis will turn the robot a bunch of times and calculate your offsets for your tracking wheels.", measure_offsets},
+     // {"Pure Pursuit Wait Until\n\nGo to (24, 24) but start running an intake once the robot passes (12, 24)", odom_pure_pursuit_wait_until_example},
+     // {"Boomerang\n\nGo to (0, 24, 45) then come back to (0, 0, 0)", odom_boomerang_example},
+     // {"Boomerang Pure Pursuit\n\nGo to (0, 24, 45) on the way to (24, 24) then come back to (0, 0, 0)", odom_boomerang_injected_pure_pursuit_example},
+     // {"Measure Offsets\n\nThis will turn the robot a bunch of times and calculate your offsets for your tracking wheels.", measure_offsets},
   });
 
   // Initialize chassis and auton selector
@@ -206,6 +205,8 @@ void opcontrol() {
 
     chassis.opcontrol_arcade_standard(ez::SPLIT);;  // Split Arcade
     
+
+
     if (master.get_digital_new_press(DIGITAL_R1)) {
       intake(100);
     } 
@@ -223,13 +224,19 @@ void opcontrol() {
       score_stop();
     }
 
-    if (master.get_digital_new_press(DIGITAL_UP)) {
-      descorer_on();
-    } 
+    //if (master.get_digital_new_press(DIGITAL_RIGHT)) {
+    //  descorer_on();
+    //} 
 
-    if (master.get_digital_new_press(DIGITAL_Y)) {
-     loader();
-    } 
+
+
+
+    //if (master.get_digital_new_press(DIGITAL_Y)) {
+    // loader();
+    //} 
+
+    descorer_right.button_toggle(master.get_digital(DIGITAL_RIGHT));
+    loader_mech.button_toggle(master.get_digital(DIGITAL_Y));
 
     pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
   }
