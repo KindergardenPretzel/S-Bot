@@ -48,6 +48,22 @@ void default_constants() {
   chassis.pid_angle_behavior_set(ez::shortest);  // Changes the default behavior for turning, this defaults it to the shortest path there
 }
 
+void red_right() {
+  chassis.pid_odom_set({{{0_in, 6_in}, fwd, DRIVE_SPEED},
+                      {{4.43_in, 22.55_in}, fwd, 80},
+                      {{6.09_in, 28_in}, fwd, 63},},
+                       true);
+  chassis.pid_wait_until_index(0);
+    intake(127);
+    chassis.pid_wait();
+    pros::delay(200);
+
+    chassis.pid_turn_set({-7, 43}, fwd,  80);
+    chassis.pid_wait();
+
+
+}
+
 ///
 // Drive Example
 ///
