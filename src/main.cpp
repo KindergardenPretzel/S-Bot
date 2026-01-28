@@ -217,12 +217,14 @@ void opcontrol() {
 
     if (master.get_digital(DIGITAL_L2)) {
       score_low(80);
+      outtake_piston.set(true);
     } 
     else if (master.get_digital(DIGITAL_L1)) {
       score_high(100);
     } 
     else {
       score_stop();
+      outtake_piston.set(false);
     }
 
     //if (master.get_digital_new_press(DIGITAL_RIGHT)) {

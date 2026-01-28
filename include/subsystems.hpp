@@ -18,7 +18,7 @@ inline pros::Motor motor_ramp(-9, pros::v5::MotorGears::blue, pros::v5::MotorUni
 
 inline Piston intake_piston ('C');
 inline Piston gate_piston('D');
-inline Piston outtake('H');
+inline Piston outtake_piston('H');
 inline Piston descorer_right('G');
 inline Piston loader_mech('A');
 
@@ -55,7 +55,6 @@ inline void score_low(int speed)
   }
    motor_intake.move(speed);
    motor_ramp.move(speed);
-   outtake.set(true);
    toggle_low = true;
 }
 
@@ -78,7 +77,6 @@ inline void score_stop() {
     toggle_high = false;
     toggle_low = false;
     gate_piston.set(false);
-    outtake.set(false);
 }
 
 
