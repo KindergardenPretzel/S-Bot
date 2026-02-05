@@ -77,6 +77,8 @@ inline void score_stop() {
     toggle_high = false;
     toggle_low = false;
     gate_piston.set(false);
+
+
 }
 
 

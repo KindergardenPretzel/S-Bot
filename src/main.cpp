@@ -3,13 +3,13 @@
 // Chassis constructor
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
-    {-15, 16, -17},     // B M F Left Chassis Ports (negative port will reverse it!)
-    {18, -19, 20},  // B M F Right Chassis Ports (negative port will reverse it!)
+    {-1, -3, -5},     // B M F Left Chassis Ports (negative port will reverse it!)
+    {16, 18, 20},  // B M F Right Chassis Ports (negative port will reverse it!)
     12,      // IMU Port
     3.25,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
     450);   // Wheel RPM = cartridge * (motor gear / wheel gear)
 
- ez::tracking_wheel horiz_tracker(-13, 2, 3.4);  // This tracking wheel is perpendicular to the drive wheels
+ ez::tracking_wheel horiz_tracker(-13, 2, 3.9);  // This tracking wheel is perpendicular to the drive wheels
  ez::tracking_wheel vert_tracker(14, 2, 0.0);   // This tracking wheel is parallel to the drive wheels
 
 /**
@@ -212,7 +212,7 @@ void opcontrol() {
       intake(100);
     } 
     if (master.get_digital_new_press(DIGITAL_R2)) {
-      intake(-70);
+      intake(-67);
     } 
 
     if (master.get_digital(DIGITAL_L2)) {
@@ -227,16 +227,6 @@ void opcontrol() {
       outtake_piston.set(false);
     }
 
-    //if (master.get_digital_new_press(DIGITAL_RIGHT)) {
-    //  descorer_on();
-    //} 
-
-
-
-
-    //if (master.get_digital_new_press(DIGITAL_Y)) {
-    // loader();
-    //} 
 
     descorer_right.button_toggle(master.get_digital(DIGITAL_RIGHT));
     loader_mech.button_toggle(master.get_digital(DIGITAL_Y));
