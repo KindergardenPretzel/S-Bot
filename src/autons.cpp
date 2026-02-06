@@ -62,7 +62,7 @@ void red_right() {
   chassis.pid_turn_set(53_deg, TURN_SPEED);
   chassis.pid_wait();
 
-  chassis.pid_odom_set(26_in, 90, true);
+  chassis.pid_odom_set(25.5_in, 90, true);
   chassis.pid_wait();
 
   chassis.pid_odom_set({{2_in, 29_in}, rev, DRIVE_SPEED},
@@ -73,21 +73,40 @@ void red_right() {
   chassis.pid_turn_set({-16, 56}, fwd,  TURN_SPEED);
   chassis.pid_wait();
 
-  chassis.pid_odom_set({{-5_in, 37.2_in}, fwd, DRIVE_SPEED},
+  chassis.pid_odom_set({{-5_in, 37.2_in}, fwd, 90},
                        true);
   chassis.pid_wait();
 
-  intake(-90);
+  intake(-100);
 
-  pros::delay(1200);
+  pros::delay(900);
 
   intake(0);
 
-  chassis.pid_odom_set({{{34.9_in, -5.57_in}, fwd, 90},},true);
+  chassis.pid_odom_set({{{30_in, -3_in}, rev, 90},},true);
     chassis.pid_wait();
 
-    chassis.pid_turn_set({-31, -21}, fwd,  80);
+    loader_mech.set(true);
+
+
+    chassis.pid_turn_set({31, -21}, fwd,  TURN_SPEED);
     chassis.pid_wait();
+    intake(100);
+
+  chassis.pid_drive_set(8_in, 85);
+  chassis.pid_wait();
+
+  pros::delay(500);
+
+    intake(0);
+
+ chassis.pid_odom_set({{{34_in, 20_in}, rev, 70},},true);
+  chassis.pid_wait();
+  
+  score_high(100);
+
+  pros::delay(2000);
+
 
   /*
   chassis.pid_odom_set({{{0_in, 10_in}, fwd, DRIVE_SPEED},
