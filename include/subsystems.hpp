@@ -6,6 +6,7 @@
 extern Drive chassis;
 
 inline bool toggle_intake=false;
+inline bool intake_positive = false;
 
 inline bool toggle_low = false;
 
@@ -25,26 +26,25 @@ inline Piston loader_mech('A');
 
 inline void intake(int speed)
 {
-  if(!toggle_intake){
-   motor_intake.move(speed);
-   motor_ramp.move(speed);
-   if(speed > 0)
-   {
-      intake_piston.set(false);
-   }
-   else
-   {
-      intake_piston.set(true);
 
-   }
-   toggle_intake = true;
+  if (speed > 0) {
+    intake_piston.set(false);
+    motor_intake.move(speed);
+    motor_ramp.move(speed);
+    intake_positive = true;
   }
-  else{
+  if (speed < 0) {
+    intake_piston.set(true);
+    motor_intake.move(speed);
+    motor_ramp.move(speed);
+    intake_positive = false;
+  }
+  if (speed == 0) {
     motor_intake.move(0);
     motor_ramp.move(0);
     intake_piston.set(false);
-    toggle_intake = false;
   }
+  
 }
 
 

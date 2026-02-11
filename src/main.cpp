@@ -38,7 +38,8 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
-      {"Red Right", red_right},
+      {"Left", red_left},
+      {"Right", red_right},
            // {"Drive\n\nDrive forward and come back", drive_example},
      // {"Turn\n\nTurn 3 times.", turn_example},
      // {"Drive and Turn\n\nDrive forward, turn, come back", drive_and_turn},
@@ -209,10 +210,26 @@ void opcontrol() {
 
 
     if (master.get_digital_new_press(DIGITAL_R1)) {
-      intake(100);
+      if ((!toggle_intake) || (toggle_intake && !intake_positive)) {
+        intake(100);
+        toggle_intake = true;
+      }
+      else
+      {
+        intake(0);
+        toggle_intake = false;
+      }
     } 
     if (master.get_digital_new_press(DIGITAL_R2)) {
-      intake(-67);
+      if ((!toggle_intake) || (toggle_intake && intake_positive)) {
+        intake(-67);
+        toggle_intake = true;
+      }
+      else
+      {
+        intake(0);
+        toggle_intake = false;
+      }
     } 
 
     if (master.get_digital(DIGITAL_L2)) {

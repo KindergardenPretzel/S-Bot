@@ -44,28 +44,33 @@ void default_constants() {
   chassis.odom_look_ahead_set(7_in);           // This is how far ahead in the path the robot looks at
   chassis.odom_boomerang_distance_set(16_in);  // This sets the maximum distance away from target that the carrot point can be
   chassis.odom_boomerang_dlead_set(0.625);     // This handles how aggressive the end of boomerang motions are
-
   chassis.pid_angle_behavior_set(ez::shortest);  // Changes the default behavior for turning, this defaults it to the shortest path there
 }
 
-void red_right() {
-  chassis.pid_odom_set(16_in, DRIVE_SPEED, true);
-  chassis.pid_wait();
-    intake(100);
 
+void red_right() {
+  // drive to 3 balls
+  chassis.pid_odom_set(16_in, 80, true);
+  chassis.pid_wait();
+  // turn intake om
+  intake(100);
+  // turn to the balls
   chassis.pid_turn_set(33_deg, TURN_SPEED);
   chassis.pid_wait();
-
+  // intake
   chassis.pid_odom_set(8_in, 50, true);
   chassis.pid_wait();
 
+  // turn to long goal
   chassis.pid_turn_set(53_deg, TURN_SPEED);
   chassis.pid_wait();
 
-  chassis.pid_odom_set(25.5_in, 90, true);
+  // take ball under red goal
+  chassis.pid_odom_set(25_in, 90, true);
   chassis.pid_wait();
 
-  chassis.pid_odom_set({{2_in, 29_in}, rev, DRIVE_SPEED},
+  // drive to the middle goal
+  chassis.pid_odom_set({{2_in, 29_in}, rev, 90},
                        true);
   chassis.pid_wait();
   intake(0);
@@ -73,82 +78,91 @@ void red_right() {
   chassis.pid_turn_set({-16, 56}, fwd,  TURN_SPEED);
   chassis.pid_wait();
 
-  chassis.pid_odom_set({{-5_in, 37.2_in}, fwd, 90},
+  intake(-60);
+  // score middle
+  chassis.pid_odom_set({{-5_in, 37.2_in}, fwd, 80},
                        true);
   chassis.pid_wait();
+  intake(-80);
 
-  intake(-100);
+  pros::delay(800);
+  intake(100);
 
-  pros::delay(900);
+  // drive to the loader
+  chassis.pid_odom_set({{{30_in, -3_in}, rev, 80},},true);
+  chassis.pid_wait();
+
+  // engage loader tool
+  loader_mech.set(true);
+
+  // intake from loader
+  chassis.pid_turn_set({31, -21}, fwd,  TURN_SPEED);
+  chassis.pid_wait();
+  intake(100);
+
+  chassis.pid_drive_set(8_in, 60);
+  chassis.pid_wait();
+
+  pros::delay(380);
 
   intake(0);
 
-  chassis.pid_odom_set({{{30_in, -3_in}, rev, 90},},true);
-    chassis.pid_wait();
-
-    loader_mech.set(true);
-
-
-    chassis.pid_turn_set({31, -21}, fwd,  TURN_SPEED);
-    chassis.pid_wait();
-    intake(100);
-
-  chassis.pid_drive_set(8_in, 85);
+  // go to the long goal and score.
+  chassis.pid_odom_set({{{33_in, 10_in}, rev, 70},
+                        {{33_in, 20_in}, rev, 70},},true);
+  chassis.pid_wait_until_index(0);
+  loader_mech.set(false);
   chassis.pid_wait();
-
-  pros::delay(500);
-
-    intake(0);
-
- chassis.pid_odom_set({{{34_in, 20_in}, rev, 70},},true);
-  chassis.pid_wait();
-  
   score_high(100);
-
   pros::delay(2000);
 
-
-  /*
-  chassis.pid_odom_set({{{0_in, 10_in}, fwd, DRIVE_SPEED},
-                      {{17_in, 22_in}, fwd, 70},
-                      {{7.5_in, 28_in}, fwd, 63},
-                       {{11_in, 30.5_in}, fwd, 63},
-                        {{16_in, 30.5_in}, fwd, DRIVE_SPEED},
-                        
-                    },
-                       true);
-  chassis.pid_wait_until_index(0);
-    intake(127);
-    chassis.pid_wait();
-
-    chassis.pid_odom_set({{{29_in, 36.5_in}, fwd, 90},},true);
-    chassis.pid_wait();
-
-    chassis.pid_odom_set({{{7_in, 27_in}, rev, 90},},true);
-    chassis.pid_wait();
-    intake(0);
-    chassis.pid_turn_set({-2.5, 35}, fwd,  80);
-    chassis.pid_wait();
-
-    chassis.pid_odom_set({{{-2.5_in, 35_in}, fwd, 70},},true);
-    chassis.pid_wait();
-    intake(-75);
-    pros::delay(2000);
-    intake(0);
-
-    chassis.pid_odom_set({{{35_in, -5_in}, rev, 90},},true);
-    chassis.pid_wait();
-
-    chassis.pid_turn_set({36.5, -12.64}, fwd,  80);
-    chassis.pid_wait();
-
-    loader_mech.set(true);
-    intake(90);
-    
-    chassis.pid_odom_set({{{36.5_in, -12.64_in}, fwd, 90},},true);
-    chassis.pid_wait();
-*/
 }
+
+
+void red_left() {
+  chassis.odom_x_flip();
+  chassis.odom_theta_flip();
+  // drive to 3 balls
+  chassis.pid_odom_set(16_in, 80, true);
+  chassis.pid_wait();
+  // turn intake om
+  intake(100);
+  // turn to the balls
+  chassis.pid_turn_set(33_deg, TURN_SPEED);
+  chassis.pid_wait();
+  // intake
+  chassis.pid_odom_set(8_in, 50, true);
+  chassis.pid_wait();
+
+  // turn to long goal
+  chassis.pid_turn_set(50_deg, TURN_SPEED);
+  chassis.pid_wait();
+
+  // take ball under red goal
+  chassis.pid_odom_set(24_in, 90, true);
+  chassis.pid_wait();
+
+  // drive to the middle goal
+  chassis.pid_odom_set({{2_in, 33_in}, rev, 90},
+                       true);
+  chassis.pid_wait();
+  intake(0);
+
+  chassis.pid_turn_set({-16, 50}, rev,  TURN_SPEED);
+  chassis.pid_wait();
+
+    // score middle
+  chassis.pid_odom_set({{-5_in, 39_in}, rev, 80},
+                       true);
+  chassis.pid_wait();
+  score_low(100);
+  pros::delay(100);
+  outtake_piston.set(true);
+  pros::delay(600);
+  score_stop();
+  outtake_piston.set(false);
+}
+
 
 ///
 // Drive Example
