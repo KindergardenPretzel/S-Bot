@@ -58,29 +58,29 @@ void red_right() {
   chassis.pid_turn_set(33_deg, TURN_SPEED);
   chassis.pid_wait();
   // intake
-  chassis.pid_odom_set(8_in, 50, true);
+  chassis.pid_odom_set(20_in, 50, true);
   chassis.pid_wait();
 
   // turn to long goal
-  chassis.pid_turn_set(53_deg, TURN_SPEED);
+  chassis.pid_turn_set(65_deg, TURN_SPEED);//37
   chassis.pid_wait();
 
   // take ball under red goal
-  chassis.pid_odom_set(25_in, 90, true);
+  chassis.pid_odom_set(15_in, 90, true);
   chassis.pid_wait();
 
   // drive to the middle goal
-  chassis.pid_odom_set({{2_in, 29_in}, rev, 90},
+  chassis.pid_odom_set({{1_in, 34_in}, rev, 90},
                        true);
   chassis.pid_wait();
   intake(0);
 
-  chassis.pid_turn_set({-16, 56}, fwd,  TURN_SPEED);
+  chassis.pid_turn_set({-16, 53}, fwd,  TURN_SPEED);
   chassis.pid_wait();
 
   intake(-60);
   // score middle
-  chassis.pid_odom_set({{-5_in, 37.2_in}, fwd, 80},
+  chassis.pid_odom_set({{-7_in, 40_in}, fwd, 80},
                        true);
   chassis.pid_wait();
   intake(-80);
@@ -89,14 +89,14 @@ void red_right() {
   intake(100);
 
   // drive to the loader
-  chassis.pid_odom_set({{{30_in, -3_in}, rev, 80},},true);
+  chassis.pid_odom_set({{{30_in, 0_in}, rev, 80},},true);
   chassis.pid_wait();
 
   // engage loader tool
   loader_mech.set(true);
 
   // intake from loader
-  chassis.pid_turn_set({31, -21}, fwd,  TURN_SPEED);
+  chassis.pid_turn_set({30, -21}, fwd,  TURN_SPEED);
   chassis.pid_wait();
   intake(100);
 
@@ -109,13 +109,12 @@ void red_right() {
 
   // go to the long goal and score.
   chassis.pid_odom_set({{{33_in, 10_in}, rev, 70},
-                        {{33_in, 20_in}, rev, 70},},true);
+                        {{33_in, 21.5_in}, rev, 70},},true);
   chassis.pid_wait_until_index(0);
   loader_mech.set(false);
   chassis.pid_wait();
   score_high(100);
   pros::delay(2000);
-
 }
 
 
@@ -164,6 +163,7 @@ void red_left() {
   score_stop();
   outtake_piston.set(false);
 
+  // drive to loader
   chassis.pid_odom_set({{29.5_in, 2_in}, fwd, 80},
                        true);
   chassis.pid_wait();
