@@ -308,16 +308,33 @@ pros::delay(100);
 chassis.pid_odom_set({{{0_in, 0_in}, rev, 110},},
                        true);
 chassis.pid_wait();
+
 score_high(110);
 pros::delay(1800);
 
 score_stop();
+loader_mech.set(false);
 
-chassis.pid_odom_set(3_in, 50, true);
-  chassis.pid_wait();
-  pros::delay(100);
-  chassis.pid_odom_set(-3_in, 50, true);
-  chassis.pid_wait();
+chassis.pid_odom_set(4_in, 60, true);
+chassis.pid_wait();
+pros::delay(20);
+chassis.pid_odom_set(-4_in, 60, true);
+chassis.pid_wait();
+chassis.pid_turn_set(0_deg, TURNSPEED);
+chassis.pid_wait();
+pros::delay(20);
+
+chassis.pid_targets_reset();               
+chassis.drive_imu_reset();                
+chassis.drive_sensor_reset();          
+chassis.odom_xyt_set(0_in, 0_in, 0_deg);
+pros::delay(100);
+
+chassis.pid_odom_set(10_in, DRIVESPEED, true);
+chassis.pid_wait();
+
+chassis.pid_turn_set(270_deg, TURNSPEED);
+chassis.pid_wait();
 }
 
 
