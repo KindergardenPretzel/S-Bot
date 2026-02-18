@@ -262,7 +262,7 @@ pros::delay(20);
 chassis.pid_turn_set(270_deg, TURNSPEED);
 chassis.pid_wait();
 pros::delay(20);
-chassis.pid_odom_set(-8_in, 110, true);
+chassis.pid_odom_set(-8_in, 127, false);
 chassis.pid_wait();
 chassis.pid_turn_set(270_deg, TURNSPEED);
 chassis.pid_wait();
@@ -272,16 +272,22 @@ pros::delay(1800);
 score_stop();
 
 pros::delay(20);
+double temp_theta = 270.0 - chassis.odom_theta_get();
+if (temp_theta < 0) {
+  temp_theta = 360.0 - temp_theta;
+}
 
 chassis.pid_targets_reset();               
 chassis.drive_imu_reset();                
-chassis.drive_sensor_reset();          
-chassis.odom_xyt_set(0_in, 0_in, 0_deg);
+chassis.drive_sensor_reset();     
+
+chassis.odom_xyt_set(0, 0, temp_theta);
 pros::delay(100);
+
 
 loader_mech.set(true);
 
-chassis.pid_odom_set({{{-1_in, 20_in}, fwd, 60},},
+chassis.pid_odom_set({{{0_in, 20_in}, fwd, 60},},
                        true);
 chassis.pid_wait();
 
@@ -320,14 +326,16 @@ chassis.pid_wait();
 pros::delay(20);
 chassis.pid_odom_set(-4_in, 60, true);
 chassis.pid_wait();
-chassis.pid_turn_set(0_deg, TURNSPEED);
+//chassis.pid_turn_set(0_deg, TURNSPEED);
 chassis.pid_wait();
 pros::delay(20);
+
+temp_theta = chassis.odom_theta_get();
 
 chassis.pid_targets_reset();               
 chassis.drive_imu_reset();                
 chassis.drive_sensor_reset();          
-chassis.odom_xyt_set(0_in, 0_in, 0_deg);
+chassis.odom_xyt_set(0, 0, temp_theta);
 pros::delay(100);
 
 chassis.pid_odom_set(10_in, DRIVESPEED, true);
@@ -335,6 +343,7 @@ chassis.pid_wait();
 
 chassis.pid_turn_set(270_deg, TURNSPEED);
 chassis.pid_wait();
+
 }
 
 
