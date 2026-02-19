@@ -63,9 +63,9 @@ inline void score_high(int speed)
     if (toggle_intake) {
     toggle_intake = false;
   }
+    gate_piston.set(true);
    motor_intake.move(speed);
    motor_ramp.move(speed);
-   gate_piston.set(true);
    toggle_high = true;
 }
 

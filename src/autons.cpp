@@ -200,105 +200,255 @@ void skills()
 {
   const int DRIVESPEED =  70;
   const int TURNSPEED = 80;
-  //
-  //chassis.odom_xyt_set(0_in, 0_in, 90_deg);
+
+  // open loader and go to the first loader
   loader_mech.set(true);
   descorer_right.set(true);
 
-  chassis.pid_odom_set(32_in, DRIVESPEED, true);
+  chassis.pid_odom_set(31.5_in, DRIVESPEED, true);
   chassis.pid_wait();
-  
+    
   pros::delay(20);
 
   chassis.pid_turn_set(90_deg, TURNSPEED);
   chassis.pid_wait();
 
+  // enable intake and get everything from the loader
   intake(100);
-   pros::delay(50);
-    chassis.pid_odom_set(10_in, DRIVESPEED, true);
+  pros::delay(50);
+  chassis.pid_odom_set(10_in, DRIVESPEED, true);
   chassis.pid_wait();
-  pros::delay(100);
+  pros::delay(50);
   chassis.pid_odom_set(-1.5_in, DRIVESPEED, true);
   chassis.pid_wait();
-  pros::delay(100);
+  pros::delay(50);
   chassis.pid_odom_set(3.5_in, DRIVESPEED, true);
   chassis.pid_wait();
-  pros::delay(100);
+  pros::delay(50);
   chassis.pid_odom_set(-1.5_in, DRIVESPEED, true);
   chassis.pid_wait();
-  pros::delay(100);
+  pros::delay(50);
   chassis.pid_odom_set(3.5_in, DRIVESPEED, true);
   chassis.pid_wait();
 
-  pros::delay(300);
+  pros::delay(200);
+
+
+  // drive backwards, turn and go parallel to the goal
+  chassis.pid_odom_set(-10_in, DRIVESPEED, true);
+  chassis.pid_wait();
+    
+  pros::delay(20);
+
+  chassis.pid_turn_set(135_deg, TURNSPEED);
+  chassis.pid_wait();
+  intake(0);
+  loader_mech.set(false);
+
+  pros::delay(20);
+
+  chassis.pid_odom_set(-17.5_in, DRIVESPEED, true);
+  chassis.pid_wait();
+  pros::delay(20);
+  chassis.pid_turn_set(90_deg, TURNSPEED);
+  chassis.pid_wait();
+  pros::delay(20);
+  chassis.pid_odom_set(-69_in, DRIVESPEED, true);
+  chassis.pid_wait();
+  pros::delay(20);
+  // turn and approach the goal
+  chassis.pid_turn_set(0_deg, TURNSPEED);
+  chassis.pid_wait();
+  pros::delay(20);
+  chassis.pid_odom_set(-11_in, DRIVESPEED, true);
+  chassis.pid_wait();
+  pros::delay(20);
+  chassis.pid_turn_set(270_deg, TURNSPEED);
+  chassis.pid_wait();
+  pros::delay(20);
+  chassis.pid_odom_set(-9_in, 127, false);
+  chassis.pid_wait();
+  chassis.pid_turn_set(270_deg, TURNSPEED);
+  chassis.pid_wait();
+  
+  // score
+  score_high(-50);
+  pros::delay(100);
+  score_high(100);
+  pros::delay(1900);
+
+  score_stop();
+
+  // reset odo X,Y
+  pros::delay(20);
+  chassis.odom_x_set(0);
+  chassis.odom_y_set(0);
+
+  pros::delay(100);
+
+
+  // get second loader
+  loader_mech.set(true);
+
+  chassis.pid_odom_set({{{-20_in, -0.7_in}, fwd, 70},},
+                        true);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(270_deg, TURNSPEED);
+  chassis.pid_wait();
+
+  intake(100);
+
+  chassis.pid_odom_set(8_in, DRIVESPEED, true);
+  chassis.pid_wait();
+  pros::delay(50);
+  chassis.pid_odom_set(-1.5_in, DRIVESPEED, true);
+  chassis.pid_wait();
+  pros::delay(50);
+  chassis.pid_odom_set(3.5_in, DRIVESPEED, true);
+  chassis.pid_wait();
+  pros::delay(50);
+  chassis.pid_odom_set(-1.5_in, DRIVESPEED, true);
+  chassis.pid_wait();
+  pros::delay(50);
+  chassis.pid_odom_set(3.5_in, DRIVESPEED, true);
+  chassis.pid_wait();
+
+  // go backwards and score
+  chassis.pid_odom_set({{{0_in, 0_in}, rev, 110},},
+                        false);
+  chassis.pid_wait();
+
+  score_high(-50);
+  pros::delay(100);
+  score_high(100);
+  pros::delay(1800);
+
+  score_stop();
+
+  //loader_mech.set(false);
+  
+  pros::delay(40);
+  chassis.pid_turn_set(270_deg, TURNSPEED);
+  chassis.pid_wait();
+
+  // try to get control bonus by pushing the balls
+  chassis.pid_odom_set(4_in, 60, true);
+  chassis.pid_wait();
+  pros::delay(20);
+  chassis.pid_odom_set(-6_in, 70, true);
+  chassis.pid_wait();
+
+  pros::delay(100);
+
+  chassis.odom_x_set(0);
+  chassis.odom_y_set(0);
+  pros::delay(100);
+
+  chassis.pid_odom_set(7_in, DRIVESPEED, true);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(180_deg, 60);
+  chassis.pid_wait();
+
+  chassis.pid_odom_set(95.5_in, DRIVESPEED, true);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(270_deg, TURNSPEED);
+  chassis.pid_wait();
+ // loader_mech.set(true);
+
+  chassis.pid_odom_set(-8_in, 110, false);
+  chassis.pid_wait();
+
+  chassis.odom_x_set(0);
+  chassis.odom_y_set(0);
+  pros::delay(100);
+
+  // go to the third loader and take 
+
+
+  chassis.pid_odom_set({{{-20_in, 0.5_in}, fwd, 70},},
+                        true);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(270_deg, TURNSPEED);
+  chassis.pid_wait();
+
+  intake(100);
+
+  chassis.pid_odom_set(8_in, DRIVESPEED, true);
+  chassis.pid_wait();
+  pros::delay(100);
+  chassis.pid_odom_set(-1.5_in, DRIVESPEED, true);
+  chassis.pid_wait();
+  pros::delay(100);
+  chassis.pid_odom_set(3.5_in, DRIVESPEED, true);
+  chassis.pid_wait();
+  pros::delay(100);
+  chassis.pid_odom_set(-1.5_in, DRIVESPEED, true);
+  chassis.pid_wait();
+  pros::delay(100);
+  chassis.pid_odom_set(3.5_in, DRIVESPEED, true);
+  chassis.pid_wait();
 
   chassis.pid_odom_set(-10_in, DRIVESPEED, true);
   chassis.pid_wait();
+
+  chassis.pid_turn_set(315_deg, TURNSPEED);
+  chassis.pid_wait();
+  intake(0);
+  loader_mech.set(false);
+
+  chassis.pid_odom_set(-17_in, DRIVESPEED, true);
+  chassis.pid_wait();
+  pros::delay(20);
+  chassis.pid_turn_set(270_deg, TURNSPEED);
+  chassis.pid_wait();
+  pros::delay(20);
+  chassis.pid_odom_set(-69_in, DRIVESPEED, true);
+  chassis.pid_wait();
+  pros::delay(20);
+  chassis.pid_turn_set(180_deg, TURNSPEED);
+  chassis.pid_wait();
+  pros::delay(20);
+
+  chassis.pid_odom_set(-10.5_in, DRIVESPEED, true);
+  chassis.pid_wait();
+  pros::delay(20);
+  chassis.pid_turn_set(90_deg, TURNSPEED);
+  chassis.pid_wait();
+  pros::delay(20);
+  chassis.pid_odom_set(-10.5_in, 127, false);
+  chassis.pid_wait();
+  chassis.pid_turn_set(90_deg, TURNSPEED);
+  chassis.pid_wait();
   
-pros::delay(20);
+  score_high(-50);
+  pros::delay(100);
+  score_high(100);
+  pros::delay(1800);
+  score_stop();
 
-chassis.pid_turn_set(135_deg, TURNSPEED);
-chassis.pid_wait();
-intake(0);
-loader_mech.set(false);
+  // reset odo
+  chassis.odom_x_set(0);
+  chassis.odom_y_set(0);
+  pros::delay(100);
 
-pros::delay(20);
+  loader_mech.set(true);
 
-chassis.pid_odom_set(-17_in, DRIVESPEED, true);
-chassis.pid_wait();
-pros::delay(20);
-chassis.pid_turn_set(90_deg, TURNSPEED);
-chassis.pid_wait();
-pros::delay(20);
-chassis.pid_odom_set(-69_in, DRIVESPEED, true);
-chassis.pid_wait();
-pros::delay(20);
-chassis.pid_turn_set(0_deg, TURNSPEED);
-chassis.pid_wait();
-pros::delay(20);
-chassis.pid_odom_set(-11_in, DRIVESPEED, true);
-chassis.pid_wait();
-pros::delay(20);
-chassis.pid_turn_set(270_deg, TURNSPEED);
-chassis.pid_wait();
-pros::delay(20);
-chassis.pid_odom_set(-8_in, 127, false);
-chassis.pid_wait();
-chassis.pid_turn_set(270_deg, TURNSPEED);
-chassis.pid_wait();
-score_high(100);
-pros::delay(1800);
+  chassis.pid_odom_set({{{20_in, 0.7_in}, fwd, 70},},
+                        true);
+  chassis.pid_wait();
 
-score_stop();
+  chassis.pid_turn_set(90_deg, TURNSPEED);
+  chassis.pid_wait();
 
-pros::delay(20);
-double temp_theta = 270.0 - chassis.odom_theta_get();
-if (temp_theta < 0) {
-  temp_theta = 360.0 - temp_theta;
-}
+  intake(100);
 
-chassis.pid_targets_reset();               
-chassis.drive_imu_reset();                
-chassis.drive_sensor_reset();     
-
-chassis.odom_xyt_set(0, 0, temp_theta);
-pros::delay(100);
-
-
-loader_mech.set(true);
-
-chassis.pid_odom_set({{{0_in, 20_in}, fwd, 60},},
-                       true);
-chassis.pid_wait();
-
-chassis.pid_turn_set(0_deg, TURNSPEED);
-chassis.pid_wait();
-
-intake(100);
-
-chassis.pid_odom_set(8_in, DRIVESPEED, true);
-chassis.pid_wait();
-pros::delay(100);
+  chassis.pid_odom_set(8_in, DRIVESPEED, true);
+  chassis.pid_wait();
+  pros::delay(100);
   chassis.pid_odom_set(-1.5_in, DRIVESPEED, true);
   chassis.pid_wait();
   pros::delay(100);
@@ -311,39 +461,46 @@ pros::delay(100);
   chassis.pid_odom_set(3.5_in, DRIVESPEED, true);
   chassis.pid_wait();
 
-chassis.pid_odom_set({{{0_in, 0_in}, rev, 110},},
-                       true);
-chassis.pid_wait();
+    // go backwards and score
+  chassis.pid_odom_set({{{0_in, 0_in}, rev, 110},},
+                        false);
+  chassis.pid_wait();
 
-score_high(110);
-pros::delay(1800);
+  score_high(-50);
+  pros::delay(100);
+  score_high(100);
+  pros::delay(1800);
+  score_stop();
 
-score_stop();
-loader_mech.set(false);
+  // try to get control bonus by pushing the balls
+  chassis.pid_odom_set(4_in, 60, true);
+  chassis.pid_wait();
+  pros::delay(20);
+  loader_mech.set(false);
+  chassis.pid_odom_set(-6_in, 70, true);
+  chassis.pid_wait();
 
-chassis.pid_odom_set(4_in, 60, true);
-chassis.pid_wait();
-pros::delay(20);
-chassis.pid_odom_set(-4_in, 60, true);
-chassis.pid_wait();
-//chassis.pid_turn_set(0_deg, TURNSPEED);
-chassis.pid_wait();
-pros::delay(20);
+  pros::delay(100);
 
-temp_theta = chassis.odom_theta_get();
-
-chassis.pid_targets_reset();               
-chassis.drive_imu_reset();                
-chassis.drive_sensor_reset();          
-chassis.odom_xyt_set(0, 0, temp_theta);
-pros::delay(100);
-
-chassis.pid_odom_set(10_in, DRIVESPEED, true);
-chassis.pid_wait();
-
-chassis.pid_turn_set(270_deg, TURNSPEED);
-chassis.pid_wait();
-
+  chassis.odom_x_set(0);
+  chassis.odom_y_set(0);
+  pros::delay(100);
+    // try to get control bonus by pushing the balls
+  chassis.pid_odom_set(7_in, DRIVESPEED, true);
+  chassis.pid_wait();
+    chassis.pid_turn_set(40_deg, TURNSPEED);
+  chassis.pid_wait();
+    chassis.pid_odom_set(37_in, DRIVESPEED, true);
+  chassis.pid_wait();
+  chassis.pid_turn_set(15_deg, TURNSPEED);
+  chassis.pid_wait();
+  loader_mech.set(true);  
+  intake(100);  
+  chassis.pid_odom_set(16_in, 110, false);
+  chassis.pid_wait();
+  loader_mech.set(false);  
+  score_high(100);
+  pros::delay(2000);
 }
 
 
