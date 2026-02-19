@@ -379,16 +379,16 @@ void skills()
 
   chassis.pid_odom_set(8_in, DRIVESPEED, true);
   chassis.pid_wait();
-  pros::delay(100);
+  pros::delay(50);
   chassis.pid_odom_set(-1.5_in, DRIVESPEED, true);
   chassis.pid_wait();
-  pros::delay(100);
+  pros::delay(50);
   chassis.pid_odom_set(3.5_in, DRIVESPEED, true);
   chassis.pid_wait();
-  pros::delay(100);
+  pros::delay(50);
   chassis.pid_odom_set(-1.5_in, DRIVESPEED, true);
   chassis.pid_wait();
-  pros::delay(100);
+  pros::delay(50);
   chassis.pid_odom_set(3.5_in, DRIVESPEED, true);
   chassis.pid_wait();
 
@@ -448,16 +448,16 @@ void skills()
 
   chassis.pid_odom_set(8_in, DRIVESPEED, true);
   chassis.pid_wait();
-  pros::delay(100);
+  pros::delay(50);
   chassis.pid_odom_set(-1.5_in, DRIVESPEED, true);
   chassis.pid_wait();
-  pros::delay(100);
+  pros::delay(50);
   chassis.pid_odom_set(3.5_in, DRIVESPEED, true);
   chassis.pid_wait();
-  pros::delay(100);
+  pros::delay(50);
   chassis.pid_odom_set(-1.5_in, DRIVESPEED, true);
   chassis.pid_wait();
-  pros::delay(100);
+  pros::delay(50);
   chassis.pid_odom_set(3.5_in, DRIVESPEED, true);
   chassis.pid_wait();
 
