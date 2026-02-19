@@ -218,13 +218,13 @@ void skills()
   pros::delay(50);
   chassis.pid_odom_set(10_in, DRIVESPEED, true);
   chassis.pid_wait();
-  pros::delay(50);
+  pros::delay(100);
   chassis.pid_odom_set(-1.5_in, DRIVESPEED, true);
   chassis.pid_wait();
   pros::delay(50);
   chassis.pid_odom_set(3.5_in, DRIVESPEED, true);
   chassis.pid_wait();
-  pros::delay(50);
+  pros::delay(100);
   chassis.pid_odom_set(-1.5_in, DRIVESPEED, true);
   chassis.pid_wait();
   pros::delay(50);
@@ -301,13 +301,13 @@ void skills()
 
   chassis.pid_odom_set(8_in, DRIVESPEED, true);
   chassis.pid_wait();
-  pros::delay(50);
+  pros::delay(100);
   chassis.pid_odom_set(-1.5_in, DRIVESPEED, true);
   chassis.pid_wait();
   pros::delay(50);
   chassis.pid_odom_set(3.5_in, DRIVESPEED, true);
   chassis.pid_wait();
-  pros::delay(50);
+  pros::delay(100);
   chassis.pid_odom_set(-1.5_in, DRIVESPEED, true);
   chassis.pid_wait();
   pros::delay(50);
@@ -379,13 +379,13 @@ void skills()
 
   chassis.pid_odom_set(8_in, DRIVESPEED, true);
   chassis.pid_wait();
-  pros::delay(50);
+  pros::delay(100);
   chassis.pid_odom_set(-1.5_in, DRIVESPEED, true);
   chassis.pid_wait();
   pros::delay(50);
   chassis.pid_odom_set(3.5_in, DRIVESPEED, true);
   chassis.pid_wait();
-  pros::delay(50);
+  pros::delay(100);
   chassis.pid_odom_set(-1.5_in, DRIVESPEED, true);
   chassis.pid_wait();
   pros::delay(50);
@@ -448,13 +448,13 @@ void skills()
 
   chassis.pid_odom_set(8_in, DRIVESPEED, true);
   chassis.pid_wait();
-  pros::delay(50);
+  pros::delay(100);
   chassis.pid_odom_set(-1.5_in, DRIVESPEED, true);
   chassis.pid_wait();
   pros::delay(50);
   chassis.pid_odom_set(3.5_in, DRIVESPEED, true);
   chassis.pid_wait();
-  pros::delay(50);
+  pros::delay(100);
   chassis.pid_odom_set(-1.5_in, DRIVESPEED, true);
   chassis.pid_wait();
   pros::delay(50);
@@ -500,6 +500,8 @@ void skills()
   chassis.pid_wait();
   loader_mech.set(false);  
   score_high(100);
+  chassis.pid_turn_set(30_deg, TURNSPEED);
+  chassis.pid_wait();
   pros::delay(2000);
 }
 
