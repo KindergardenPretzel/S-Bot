@@ -351,7 +351,8 @@ void skills()
   chassis.pid_turn_set(180_deg, 60);
   chassis.pid_wait();
 
-  chassis.pid_odom_set(95.5_in, DRIVESPEED, true);
+  // run between goals
+  chassis.pid_odom_set(96.5_in, DRIVESPEED, true);
   chassis.pid_wait();
 
   chassis.pid_turn_set(270_deg, TURNSPEED);
