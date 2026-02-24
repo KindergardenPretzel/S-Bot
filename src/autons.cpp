@@ -231,7 +231,7 @@ void skills()
   chassis.pid_odom_set(3.5_in, DRIVESPEED, true);
   chassis.pid_wait();
 
-  pros::delay(200);
+  //pros::delay(200);
 
 
   // drive backwards, turn and go parallel to the goal
@@ -277,7 +277,7 @@ void skills()
   score_high(100);
   pros::delay(1900);
 
-  score_stop();
+  //score_stop();
 
   // reset odo X,Y
   pros::delay(20);
@@ -286,13 +286,15 @@ void skills()
 
   pros::delay(100);
 
-
+  
   // get second loader
   loader_mech.set(true);
 
   chassis.pid_odom_set({{{-20_in, -0.7_in}, fwd, 70},},
                         true);
   chassis.pid_wait();
+
+  score_stop();
 
   chassis.pid_turn_set(270_deg, TURNSPEED);
   chassis.pid_wait();
@@ -324,9 +326,7 @@ void skills()
   score_high(100);
   pros::delay(1800);
 
-  score_stop();
-
-  //loader_mech.set(false);
+//  score_stop();
   
   pros::delay(40);
   chassis.pid_turn_set(270_deg, TURNSPEED);
@@ -335,40 +335,49 @@ void skills()
   // try to get control bonus by pushing the balls
   chassis.pid_odom_set(4_in, 60, true);
   chassis.pid_wait();
+  
+  score_stop();
+
   pros::delay(20);
   chassis.pid_odom_set(-6_in, 70, true);
   chassis.pid_wait();
 
   pros::delay(100);
 
+  // reset odo, drive away from left goal, turn left
   chassis.odom_x_set(0);
   chassis.odom_y_set(0);
   pros::delay(100);
 
-  chassis.pid_odom_set(7_in, DRIVESPEED, true);
+  chassis.pid_odom_set(8_in, DRIVESPEED, true);
   chassis.pid_wait();
 
   chassis.pid_turn_set(180_deg, 60);
   chassis.pid_wait();
 
-  // run between goals
-  chassis.pid_odom_set(96.5_in, DRIVESPEED, true);
+  // drive between long goals
+  //chassis.pid_odom_set(96.5_in, DRIVESPEED, true);
+  //chassis.pid_wait();
+  
+  chassis.pid_odom_set({{{-8_in, -96.75_in}, fwd, DRIVESPEED},},
+                        true);
   chassis.pid_wait();
+
 
   chassis.pid_turn_set(270_deg, TURNSPEED);
   chassis.pid_wait();
  // loader_mech.set(true);
 
-  chassis.pid_odom_set(-8_in, 110, false);
+ // drive to goal, position using aligner tool
+  chassis.pid_odom_set(-9_in, 110, false);
   chassis.pid_wait();
 
+  // reset odo
   chassis.odom_x_set(0);
   chassis.odom_y_set(0);
   pros::delay(100);
 
-  // go to the third loader and take 
-
-
+  // go to the third loader and take everything it has!
   chassis.pid_odom_set({{{-20_in, 0.5_in}, fwd, 70},},
                         true);
   chassis.pid_wait();
@@ -393,23 +402,32 @@ void skills()
   chassis.pid_odom_set(3.5_in, DRIVESPEED, true);
   chassis.pid_wait();
 
+  // drive away from the loader
   chassis.pid_odom_set(-10_in, DRIVESPEED, true);
   chassis.pid_wait();
 
+  // turn to the wall (backwards)
   chassis.pid_turn_set(315_deg, TURNSPEED);
   chassis.pid_wait();
   intake(0);
   loader_mech.set(false);
 
+  // drive to the wall
   chassis.pid_odom_set(-17_in, DRIVESPEED, true);
   chassis.pid_wait();
   pros::delay(20);
+
+  // turn to drive parallel to the goal
   chassis.pid_turn_set(270_deg, TURNSPEED);
   chassis.pid_wait();
   pros::delay(20);
+
+  // drive behind the right goal
   chassis.pid_odom_set(-69_in, DRIVESPEED, true);
   chassis.pid_wait();
   pros::delay(20);
+
+  // turn, drive back
   chassis.pid_turn_set(180_deg, TURNSPEED);
   chassis.pid_wait();
   pros::delay(20);
@@ -417,9 +435,12 @@ void skills()
   chassis.pid_odom_set(-10.5_in, DRIVESPEED, true);
   chassis.pid_wait();
   pros::delay(20);
+
+  // turn backwards to the goal
   chassis.pid_turn_set(90_deg, TURNSPEED);
   chassis.pid_wait();
   pros::delay(20);
+  // align and score
   chassis.pid_odom_set(-10.5_in, 127, false);
   chassis.pid_wait();
   chassis.pid_turn_set(90_deg, TURNSPEED);
@@ -429,7 +450,6 @@ void skills()
   pros::delay(100);
   score_high(100);
   pros::delay(1800);
-  score_stop();
 
   // reset odo
   chassis.odom_x_set(0);
@@ -438,9 +458,11 @@ void skills()
 
   loader_mech.set(true);
 
+  // go to the loader
   chassis.pid_odom_set({{{20_in, 0.7_in}, fwd, 70},},
                         true);
   chassis.pid_wait();
+  score_stop();
 
   chassis.pid_turn_set(90_deg, TURNSPEED);
   chassis.pid_wait();
@@ -462,7 +484,7 @@ void skills()
   chassis.pid_odom_set(3.5_in, DRIVESPEED, true);
   chassis.pid_wait();
 
-    // go backwards and score
+  // go back to the goal and score
   chassis.pid_odom_set({{{0_in, 0_in}, rev, 110},},
                         false);
   chassis.pid_wait();
@@ -471,22 +493,24 @@ void skills()
   pros::delay(100);
   score_high(100);
   pros::delay(1800);
-  score_stop();
 
   // try to get control bonus by pushing the balls
   chassis.pid_odom_set(4_in, 60, true);
   chassis.pid_wait();
   pros::delay(20);
+  score_stop();
   loader_mech.set(false);
   chassis.pid_odom_set(-6_in, 70, true);
   chassis.pid_wait();
 
   pros::delay(100);
 
+
+  // reset odo
   chassis.odom_x_set(0);
   chassis.odom_y_set(0);
   pros::delay(100);
-    // try to get control bonus by pushing the balls
+  
   chassis.pid_odom_set(7_in, DRIVESPEED, true);
   chassis.pid_wait();
     chassis.pid_turn_set(40_deg, TURNSPEED);
