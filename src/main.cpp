@@ -1,5 +1,7 @@
 #include "main.h"
 
+
+bool isAuton = false;
 // Chassis constructor
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
@@ -41,6 +43,7 @@ void initialize() {
         {"Skills", skills},
       {"Left", red_left},
       {"Right", red_right},
+      {"Right Descore", red_right_descore},
            // {"Drive\n\nDrive forward and come back", drive_example},
      // {"Turn\n\nTurn 3 times.", turn_example},
      // {"Drive and Turn\n\nDrive forward, turn, come back", drive_and_turn},
@@ -69,6 +72,9 @@ void initialize() {
  * the robot is enabled, this task will exit.
  */
 void disabled() {
+  if (isAuton) {
+    //descorer_right.set(true);
+  }
   // . . .
 }
 
@@ -91,6 +97,7 @@ void autonomous() {
   chassis.drive_sensor_reset();               // Reset drive sensors to 0
   chassis.odom_xyt_set(0_in, 0_in, 0_deg);    // Set the current position, you can start at a specific position with this
   chassis.drive_brake_set(MOTOR_BRAKE_HOLD);  // Set motors to hold.  This helps autonomous consistency
+  isAuton = true;
   ez::as::auton_selector.selected_auton_call();  // Calls selected auton from autonomous selector
 }
 

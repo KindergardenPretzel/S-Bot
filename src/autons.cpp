@@ -47,6 +47,76 @@ void default_constants() {
   chassis.pid_angle_behavior_set(ez::shortest);  // Changes the default behavior for turning, this defaults it to the shortest path there
 }
 
+void red_right_descore() {
+  // drive to 3 balls
+  chassis.pid_odom_set(16_in, 80, true);
+  chassis.pid_wait();
+  // turn intake om
+  intake(100);
+  // turn to the balls
+  chassis.pid_turn_set(33_deg, TURN_SPEED);
+  chassis.pid_wait();
+  // intake
+  chassis.pid_odom_set(16_in, 40, true);
+  chassis.pid_wait();
+
+  chassis.pid_odom_set(-4_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  chassis.pid_turn_set({-16, 53}, fwd,  TURN_SPEED);
+  chassis.pid_wait();
+  intake(0);
+
+  // score middle
+  chassis.pid_odom_set({{-7_in, 40_in}, fwd, DRIVE_SPEED},
+                       true);
+
+  chassis.pid_wait_until(6_in);
+  intake(-60);
+
+  chassis.pid_wait();
+  intake(-80);
+
+  pros::delay(1000);
+  intake(100);
+
+    // drive to the loader
+  chassis.pid_odom_set({{{30_in, 0_in}, rev, 80},},true);
+  chassis.pid_wait();
+
+  // engage loader tool
+  loader_mech.set(true);
+
+  // intake from loader
+  chassis.pid_turn_set({31, -21}, fwd,  TURN_SPEED);
+  chassis.pid_wait();
+  intake(100);
+
+  chassis.pid_drive_set(9_in, 70);
+  chassis.pid_wait();
+
+  pros::delay(390);
+
+    // go to the long goal and score.
+  chassis.pid_odom_set({{{33_in, 10_in}, rev, 90},
+                        {{33_in, 21.5_in}, rev, 90},},true);
+  chassis.pid_wait_until_index(0);
+  intake(0);
+  loader_mech.set(false);
+  chassis.pid_wait();
+  score_high(120);
+  pros::delay(1200);
+  score_stop();
+  chassis.pid_drive_set(9.5_in, 90);
+  chassis.pid_wait();
+  chassis.pid_turn_set(225_deg, TURN_SPEED);
+  chassis.pid_wait();
+  chassis.pid_drive_set(-12_in, 95);
+  chassis.pid_wait();
+  chassis.pid_turn_set(180_deg, TURN_SPEED);
+  chassis.pid_wait();
+  chassis.pid_drive_set(-17_in, 70);
+  chassis.pid_wait();
+}
 
 void red_right() {
   // drive to 3 balls
@@ -378,7 +448,7 @@ void skills()
   pros::delay(100);
 
   // go to the third loader and take everything it has!
-  chassis.pid_odom_set({{{-20_in, 0.5_in}, fwd, 70},},
+  chassis.pid_odom_set({{{-20_in, 0.7_in}, fwd, 70},},
                         true);
   chassis.pid_wait();
 
@@ -513,17 +583,18 @@ void skills()
   
   chassis.pid_odom_set(7_in, DRIVESPEED, true);
   chassis.pid_wait();
-    chassis.pid_turn_set(40_deg, TURNSPEED);
+    chassis.pid_turn_set(45_deg, TURNSPEED);
   chassis.pid_wait();
-    chassis.pid_odom_set(37_in, DRIVESPEED, true);
+    chassis.pid_odom_set(39_in, DRIVESPEED, true);
   chassis.pid_wait();
   chassis.pid_turn_set(15_deg, TURNSPEED);
   chassis.pid_wait();
   loader_mech.set(true);  
   intake(100);  
   chassis.pid_odom_set(16_in, 110, false);
-  chassis.pid_wait();
+  chassis.pid_wait_until(4_in);
   loader_mech.set(false);  
+  chassis.pid_wait();
   score_high(100);
   chassis.pid_turn_set(30_deg, TURNSPEED);
   chassis.pid_wait();
