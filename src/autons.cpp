@@ -57,30 +57,31 @@ void red_right_descore() {
   chassis.pid_turn_set(33_deg, TURN_SPEED);
   chassis.pid_wait();
   // intake
-  chassis.pid_odom_set(16_in, 40, true);
+  chassis.pid_odom_set(16_in, 35, false);
   chassis.pid_wait();
 
-  chassis.pid_odom_set(-4_in, DRIVE_SPEED, true);
+  chassis.pid_odom_set(-4_in, 60, true);
   chassis.pid_wait();
-  chassis.pid_turn_set({-16, 53}, fwd,  TURN_SPEED);
+  chassis.pid_turn_set({-16, 55}, fwd,  TURN_SPEED);
   chassis.pid_wait();
-  intake(0);
 
   // score middle
-  chassis.pid_odom_set({{-7_in, 40_in}, fwd, DRIVE_SPEED},
+  chassis.pid_odom_set({{-4.5_in, 39_in}, fwd, DRIVE_SPEED},
                        true);
 
   chassis.pid_wait_until(6_in);
+  
   intake(-60);
 
   chassis.pid_wait();
-  intake(-80);
+
+ intake(-80);
 
   pros::delay(1000);
   intake(100);
 
     // drive to the loader
-  chassis.pid_odom_set({{{30_in, 0_in}, rev, 80},},true);
+  chassis.pid_odom_set({{{30.5_in, 0_in}, rev, 80},},true);
   chassis.pid_wait();
 
   // engage loader tool
@@ -91,7 +92,7 @@ void red_right_descore() {
   chassis.pid_wait();
   intake(100);
 
-  chassis.pid_drive_set(9_in, 70);
+  chassis.pid_drive_set(9.5_in, 70);
   chassis.pid_wait();
 
   pros::delay(390);
@@ -100,7 +101,7 @@ void red_right_descore() {
   chassis.pid_odom_set({{{33_in, 10_in}, rev, 90},
                         {{33_in, 21.5_in}, rev, 90},},true);
   chassis.pid_wait_until_index(0);
-  intake(0);
+  //intake(0);
   loader_mech.set(false);
   chassis.pid_wait();
   score_high(120);
@@ -114,8 +115,9 @@ void red_right_descore() {
   chassis.pid_wait();
   chassis.pid_turn_set(180_deg, TURN_SPEED);
   chassis.pid_wait();
-  chassis.pid_drive_set(-17_in, 70);
+  chassis.pid_drive_set(-15.5_in, 65);
   chassis.pid_wait();
+  
 }
 
 void red_right() {
@@ -182,11 +184,90 @@ void red_right() {
                         {{33_in, 21.5_in}, rev, 70},},true);
   chassis.pid_wait_until_index(0);
   loader_mech.set(false);
+  intake(100);
   chassis.pid_wait();
   score_high(100);
   pros::delay(2000);
 }
 
+
+void red_left_descore() {
+  chassis.odom_x_flip();
+  chassis.odom_theta_flip();
+  // drive to 3 balls
+  chassis.pid_odom_set(16_in, 80, true);
+  chassis.pid_wait();
+  // turn intake om
+  intake(100);
+  // turn to the balls
+  chassis.pid_turn_set(33_deg, TURN_SPEED);
+  chassis.pid_wait();
+  // intake
+  chassis.pid_odom_set(16_in, 35, true);
+  chassis.pid_wait();
+
+  // drive to the middle goal
+  chassis.pid_odom_set(-4_in, 50, true);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set({-7, 39}, rev,  TURN_SPEED);
+  chassis.pid_wait();
+  
+  chassis.pid_odom_set({{{-7_in, 39_in}, rev, 80},},true);
+  chassis.pid_wait();
+
+
+  intake(0);
+  // score middle
+  score_low(100);
+  pros::delay(100);
+  outtake_piston.set(true);
+  pros::delay(1100);
+  score_stop();
+  outtake_piston.set(false);
+
+  // drive to loader
+  chassis.pid_odom_set({{28.5_in, 2_in}, fwd, 80},
+                       true);
+  chassis.pid_wait();
+
+    // engage loader tool
+  loader_mech.set(true);
+  pros::delay(50);
+
+  chassis.pid_turn_set({30, -21}, fwd,  TURN_SPEED);
+  chassis.pid_wait();
+
+    // intake from loader
+  intake(100);
+  chassis.pid_odom_set(10_in, 90, true);
+  chassis.pid_wait();
+  
+  pros::delay(350);
+
+  intake(0);
+
+  chassis.pid_odom_set({{{29_in, 10_in}, rev, 90},
+                        {{29_in, 22.5_in}, rev, 90},},true);
+
+  chassis.pid_wait_until_index(0);
+  intake(100);
+  loader_mech.set(false);
+  chassis.pid_wait();
+  score_high(120);
+  pros::delay(1200);
+  score_stop();
+  chassis.pid_drive_set(9.7_in, 90);
+  chassis.pid_wait();
+  chassis.pid_turn_set(135_deg, TURN_SPEED);
+  chassis.pid_wait();
+  chassis.pid_drive_set(-13_in, 95);
+  chassis.pid_wait();
+  chassis.pid_turn_set(180_deg, TURN_SPEED);
+  chassis.pid_wait();
+  chassis.pid_drive_set(-15.5_in, 65);
+  chassis.pid_wait();
+}
 
 void red_left() {
   chassis.odom_x_flip();
@@ -362,9 +443,10 @@ void skills()
 
   chassis.pid_odom_set({{{-20_in, -0.7_in}, fwd, 70},},
                         true);
+  chassis.pid_wait_until(1_in);
+  score_stop();
   chassis.pid_wait();
 
-  score_stop();
 
   chassis.pid_turn_set(270_deg, TURNSPEED);
   chassis.pid_wait();
@@ -404,9 +486,11 @@ void skills()
 
   // try to get control bonus by pushing the balls
   chassis.pid_odom_set(4_in, 60, true);
+  chassis.pid_wait_until(1_in);
+  score_stop();
   chassis.pid_wait();
   
-  score_stop();
+
 
   pros::delay(20);
   chassis.pid_odom_set(-6_in, 70, true);
@@ -531,8 +615,10 @@ void skills()
   // go to the loader
   chassis.pid_odom_set({{{20_in, 0.7_in}, fwd, 70},},
                         true);
+  chassis.pid_wait_until(1_in);
+    score_stop();
   chassis.pid_wait();
-  score_stop();
+
 
   chassis.pid_turn_set(90_deg, TURNSPEED);
   chassis.pid_wait();
@@ -566,9 +652,10 @@ void skills()
 
   // try to get control bonus by pushing the balls
   chassis.pid_odom_set(4_in, 60, true);
+  chassis.pid_wait_until(1_in);
+  score_stop();
   chassis.pid_wait();
   pros::delay(20);
-  score_stop();
   loader_mech.set(false);
   chassis.pid_odom_set(-6_in, 70, true);
   chassis.pid_wait();

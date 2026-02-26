@@ -19,4 +19,5 @@ void measure_offsets();
 void red_right();
 void red_left();
 void red_right_descore();
+void red_left_descore();
 void skills();
