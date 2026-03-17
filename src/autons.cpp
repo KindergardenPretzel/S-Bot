@@ -315,7 +315,7 @@ void red_left() {
   outtake_piston.set(false);
 
   // drive to loader
-  chassis.pid_odom_set({{29.5_in, 2_in}, fwd, 80},
+  chassis.pid_odom_set({{32_in, 2_in}, fwd, 80},
                        true);
   chassis.pid_wait();
 
@@ -323,7 +323,7 @@ void red_left() {
   loader_mech.set(true);
   pros::delay(50);
 
-  chassis.pid_turn_set({30, -21}, fwd,  TURN_SPEED);
+  chassis.pid_turn_set({34.4, -21}, fwd,  TURN_SPEED);
   chassis.pid_wait();
 
   // intake from loader
@@ -337,8 +337,8 @@ void red_left() {
   intake(0);
  
     // go to the long goal and score.
-  chassis.pid_odom_set({{{30_in, 10_in}, rev, 70},
-                        {{30_in, 21_in}, rev, 70},},true);
+  chassis.pid_odom_set({{{33_in, 10_in}, rev, 70},
+                        {{33_in, 22_in}, rev, 70},},true);
   chassis.pid_wait_until_index(0);
   loader_mech.set(false);
   chassis.pid_wait();
@@ -426,7 +426,7 @@ void skills()
   score_high(-50);
   pros::delay(100);
   score_high(100);
-  pros::delay(1900);
+  pros::delay(2000);
 
   //score_stop();
 
@@ -441,7 +441,7 @@ void skills()
   // get second loader
   loader_mech.set(true);
 
-  chassis.pid_odom_set({{{-20_in, -0.7_in}, fwd, 70},},
+  chassis.pid_odom_set({{{-20_in, -0.3_in}, fwd, 70},},
                         true);
   chassis.pid_wait_until(1_in);
   score_stop();
@@ -477,6 +477,8 @@ void skills()
   pros::delay(100);
   score_high(100);
   pros::delay(1800);
+  score_stop();
+  pros::delay(100);
 
 //  score_stop();
   
@@ -485,9 +487,7 @@ void skills()
   chassis.pid_wait();
 
   // try to get control bonus by pushing the balls
-  chassis.pid_odom_set(4_in, 60, true);
-  chassis.pid_wait_until(1_in);
-  score_stop();
+  chassis.pid_odom_set(4_in, 50, true);
   chassis.pid_wait();
   
 
@@ -532,7 +532,7 @@ void skills()
   pros::delay(100);
 
   // go to the third loader and take everything it has!
-  chassis.pid_odom_set({{{-20_in, 0.7_in}, fwd, 70},},
+  chassis.pid_odom_set({{{-20_in, 1.5_in}, fwd, 70},},
                         true);
   chassis.pid_wait();
 
@@ -613,7 +613,7 @@ void skills()
   loader_mech.set(true);
 
   // go to the loader
-  chassis.pid_odom_set({{{20_in, 0.7_in}, fwd, 70},},
+  chassis.pid_odom_set({{{20_in, 0.5_in}, fwd, 70},},
                         true);
   chassis.pid_wait_until(1_in);
     score_stop();
@@ -649,11 +649,11 @@ void skills()
   pros::delay(100);
   score_high(100);
   pros::delay(1800);
+  score_stop();
+  pros::delay(100);
 
   // try to get control bonus by pushing the balls
-  chassis.pid_odom_set(4_in, 60, true);
-  chassis.pid_wait_until(1_in);
-  score_stop();
+  chassis.pid_odom_set(4_in, 50, true);
   chassis.pid_wait();
   pros::delay(20);
   loader_mech.set(false);
@@ -678,13 +678,13 @@ void skills()
   chassis.pid_wait();
   loader_mech.set(true);  
   intake(100);  
-  chassis.pid_odom_set(16_in, 110, false);
-  chassis.pid_wait_until(4_in);
+  chassis.pid_odom_set(14_in, 90, false);
+  chassis.pid_wait_until(6_in);
   loader_mech.set(false);  
   chassis.pid_wait();
   score_high(100);
-  chassis.pid_turn_set(30_deg, TURNSPEED);
-  chassis.pid_wait();
+  //chassis.pid_turn_set(30_deg, TURNSPEED);
+  //chassis.pid_wait();
   pros::delay(2000);
 }
 
